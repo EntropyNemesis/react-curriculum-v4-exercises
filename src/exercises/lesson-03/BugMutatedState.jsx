@@ -13,8 +13,7 @@ export default function BugMutatedState() {
   let [count, setCount] = useState(0);
 
   function handleAdd() {
-    count++;
-    setCount(count);
+    setCount((previous) => previous + 1);
   }
 
   return (
@@ -26,4 +25,13 @@ export default function BugMutatedState() {
 }
 
 // Explanation:
-// (Write your explanation here)
+// The original handleAdd() function read:
+//
+//   function handleAdd() {
+//      count++;
+//      setCount(count);
+//   }
+
+//Here, I used functional updating to prevent stale state, because each time the useState function
+// runs, it will automatically use the previous value, while still keeping the original value the
+// same instead of mutating it in place.

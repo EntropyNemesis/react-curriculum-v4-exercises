@@ -11,12 +11,13 @@
 
   Use the commented "Explanation" section at the bottom of this lesson's components.
 */
+import { useState } from 'react';
 
 export default function BugProps({ name = 'friend' }) {
-  let message = 'Hello, ' + name;
+  const [message, setMessage] = useState('Hello, ' + name);
 
   function handleChange() {
-    message = 'Hi, ' + name + '!';
+    setMessage('Hi, ' + name + '!');
   }
 
   return (
@@ -28,4 +29,9 @@ export default function BugProps({ name = 'friend' }) {
 }
 
 // Explanation:
-// (Write your explanation here)
+// In this bug fix, we introduce useState in order for React to track and manage the message values
+// using state changes instead of mutating regular variables.  The prop "name" is destructured in the
+// initial BugProps function declaration, and its value remains the same throughout the code, though
+// it is part of "message" which is managed using setMessage defined in the handleChange function and
+// triggered by the user click of a button.  The value only changes one time, because subsequent
+// button clicks render the same value (by calling setMessage) each time.
