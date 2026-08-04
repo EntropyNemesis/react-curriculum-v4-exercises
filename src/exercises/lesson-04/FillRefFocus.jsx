@@ -24,7 +24,11 @@ export default function FillRefFocus() {
   );
 }
 
-/* Original code so we can see what changed:
+/* Here we added a function that handles the button click by using useRef (defined 
+as inputRef) to access the DOM and add focus to the user input field. We add that handler
+function with the useRef into the button properties in the return section of the component.
+
+Original code so we can see what changed:
 
 export default function FillRefFocus() {
   function focusInput() {}
