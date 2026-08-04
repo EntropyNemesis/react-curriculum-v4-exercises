@@ -25,5 +25,5 @@ export default function BugEffectLoop() {
 // The useEffect is a function that takes two arguments: the effect, and the dependency array.
 // The dependency array tells us what values ("dependencies") for which any changes would trigger
 // a re-run of the effect. As we learned in the week 3 lesson, an empty dependency array signals
-// to Reast that this effect has no dependency values that change, so the effect should only run
+// to React that this effect has no dependency values that change, so the effect should only run
 // after the initial mount.
