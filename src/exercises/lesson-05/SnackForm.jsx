@@ -46,15 +46,23 @@ export default function SnackForm({
 
   function handleSubmit(e) {
     e.preventDefault();
-    const formData = new FormData(e.target);
-    const name = formData.get('name');
-    const rating = formData.get('rating');
+    //const formData = new FormData(e.target);
+    //const name = formData.get('name');
+    //const rating = formData.get('rating');
+
+    if (!validateName() || !validateRating()) {
+      setTouched({ name: true, rating: true });
+      return;
+    }
 
     if (isEditing) {
       updateSnack(editingSnack.id, name, rating);
     } else {
       addSnack(name, rating);
-      e.target.reset();
+      //e.target.reset();
+      setName('');
+      setRating('');
+      setTouched({ name: false, rating: false });
     }
   }
 
@@ -103,6 +111,7 @@ export default function SnackForm({
         <button
           type="submit"
           className={`${styles.button} ${styles['submit-button']}`}
+          //disabled={!validateName() || !validateRating()}
         >
           {isEditing ? 'Save' : 'Add'}
         </button>
@@ -121,4 +130,9 @@ export default function SnackForm({
   );
 }
 
-/* onFocus doesn't need any info from event because it doesn't read event.target.value or other event properties like onChange does */
+/* onFocus doesn't need any info from event because it doesn't read event.target.value or 
+other event properties like onChange does.
+
+Also removed disabled button property because this didn't fully meet the pre-submission 
+requirements like turning all untouched fields to touched in order to prevent blank form
+submission*/
