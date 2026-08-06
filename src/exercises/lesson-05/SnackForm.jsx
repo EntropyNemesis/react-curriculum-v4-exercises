@@ -1,4 +1,5 @@
 import styles from './SnackForm.module.css';
+import { useState, useEffect } from 'react';
 
 export default function SnackForm({
   addSnack,
@@ -8,6 +9,22 @@ export default function SnackForm({
   className,
 }) {
   const isEditing = Boolean(editingSnack);
+
+  const [name, setName] = useState('');
+  const [rating, setRating] = useState('');
+  const [touched, setTouched] = useState({ name: false, rating: false });
+
+  useEffect(() => {
+    setTouched({ name: false, rating: false });
+
+    if (isEditing) {
+      setName(editingSnack.name);
+      setRating(editingSnack.rating);
+    } else {
+      setName('');
+      setRating('');
+    }
+  }, [editingSnack]);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -37,10 +54,12 @@ export default function SnackForm({
         <input
           type="text"
           name="name"
-          defaultValue={isEditing ? editingSnack.name : ''}
+          value={name}
+          onChange={(event) => setName(event.target.value)}
           required
           className={styles['field-input']}
           placeholder="Enter snack name"
+          onFocus={() => setTouched((prev) => ({ ...prev, name: true }))}
         />
       </div>
 
@@ -49,12 +68,14 @@ export default function SnackForm({
         <input
           type="number"
           name="rating"
-          defaultValue={isEditing ? editingSnack.rating : ''}
+          value={rating}
+          onChange={(event) => setRating(event.target.value)}
           required
           min="1"
           max="5"
           className={styles['field-input']}
           placeholder="Rate 1-5"
+          onFocus={() => setTouched((prev) => ({ ...prev, rating: true }))}
         />
       </div>
 
@@ -79,3 +100,5 @@ export default function SnackForm({
     </form>
   );
 }
+
+/* onFocus doesn't need any info from event because it doesn't read event.target.value or other event properties like onChange does */
