@@ -3,14 +3,19 @@ import UserProfile from '../../components/UserProfileSection.jsx';
 import TaskFilterButtons from '../../components/TaskFilterButtonGroup.jsx';
 import TaskItem from '../../components/TaskItem.jsx';
 import TaskFilter from '../../utils/TaskFilterLogic.js';
+import { useTasksDataFetch } from '../../hooks/useTasksDataFetch.js';
 
 export default function StudentWork() {
-  const [tasks, setTasks] = useState([]);
+  /*const [tasks, setTasks] = useState([]);
   const [filter, setFilter] = useState('all');
   const [loading, setLoading] = useState(true);
+*/
+  const { tasks, loading } = useTasksDataFetch(); //we moved setTasks and setLoading to the custom hook
+  const [filter, setFilter] = useState('all');
 
   //  #1: Data fetching + state + UI logic all mixed together
-  useEffect(() => {
+
+  /*useEffect(() => {
     const timeout = setTimeout(() => {
       setTasks([
         { id: 1, title: 'Learn React', completed: true },
@@ -22,6 +27,7 @@ export default function StudentWork() {
 
     return () => clearTimeout(timeout);
   }, []);
+  */
 
   // #2: Filtering logic inside component
   let visibleTasks = TaskFilter(tasks, filter);
