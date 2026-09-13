@@ -23,16 +23,20 @@ const POSTS_ENDPOINT = 'https://jsonplaceholder.typicode.com/posts/';
  * - body
  */
 export async function getPosts() {
-  console.log('[getPosts]: fetching list of posts');
-
-  // TODO: use this `url` const to fetch the list of posts
-  // and return some JSON data.
-  // You may delete this comment once you've finished the implementation.
-  // eslint-disable-next-line no-unused-vars
-  const url = POSTS_ENDPOINT;
+  const queryParams = new URLSearchParams();
+  queryParams.append('_limit', '10');
+  const url = `${POSTS_ENDPOINT}?${queryParams}`;
+  console.log(url);
   const response = await fetch(url);
-  const posts = await response.json();
-  return posts;
+  console.log('[getPosts]: fetching list of posts');
+  if (!response.ok) {
+    throw new Error(
+      `Sorry, this request failed to process: ${response.status}`
+    );
+  } else {
+    const posts = await response.json();
+    return posts;
+  }
 }
 
 /**
@@ -47,15 +51,14 @@ export async function getSinglePost(postId) {
     throw new Error('[getSinglePost]: postId parameter is required!');
   }
 
-  console.log('[getSinglePost]: fetching post with id:', postId);
-
-  // TODO: use this `url` const to fetch the single post
-  // and return some JSON data.
-  // You may delete this comment once you've finished the implementation.
-  // eslint-disable-next-line no-unused-vars
   const url = `${POSTS_ENDPOINT}${postId}`;
-
   const response = await fetch(url);
-  const post = await response.json();
-  return post;
+
+  if (!response.ok) {
+    throw new Error(response.status);
+  } else {
+    const post = await response.json();
+    console.log('[getSinglePost]: fetching post with id:', postId);
+    return post;
+  }
 }
