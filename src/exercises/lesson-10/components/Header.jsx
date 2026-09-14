@@ -10,6 +10,8 @@ export default function Header({ user }) {
     backgroundColor: isActive ? '#eee' : 'transparent',
   });
 
+  const BASE = '/lessons/lesson-10';
+
   return (
     <header style={{ padding: 12, borderBottom: '1px solid #ddd' }}>
       <h1 style={{ margin: 0 }}>Lesson 10 Routing Demo</h1>
@@ -22,6 +24,17 @@ export default function Header({ user }) {
         >
           History API (MDN)
         </a>
+        <NavLink to={BASE} end style={navLinkStyles}>
+          Home
+        </NavLink>
+        <NavLink to={`${BASE}/checkout`} style={navLinkStyles}>
+          Checkout
+        </NavLink>
+        {user.isLoggedIn && (
+          <NavLink to={`${BASE}/account`} style={navLinkStyles}>
+            Account
+          </NavLink>
+        )}
       </nav>
 
       <div style={{ marginTop: 8 }}>
